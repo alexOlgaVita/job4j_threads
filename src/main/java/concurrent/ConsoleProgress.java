@@ -12,7 +12,7 @@ public class ConsoleProgress implements Runnable {
                 i = (i == 3) ? 0 : ++i;
                 System.out.print("\r load: " + process[i]);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }
