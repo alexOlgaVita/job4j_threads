@@ -20,10 +20,7 @@ public class UserCache {
     public synchronized List<User> findAll() {
         List<User> result =  new ArrayList<>();
         for (Integer key : users.keySet()) {
-            /* наверное, можно добавлять findById(key), но по-моему ничто не мешает в синхронизированном
-            блоке использовать стандартный способ - прямой доступ по ключу
-             */
-            result.add(users.get(key));
+            result.add(findById(key));
         }
         return result;
     }
