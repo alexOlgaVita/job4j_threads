@@ -19,10 +19,8 @@ public class SimpleBlockingQueue<T> {
 
     public T poll() throws InterruptedException {
         synchronized (monitor) {
-            System.out.println("awaiting HIRE");
             while (queue.peek() == null) {
                 try {
-                    System.out.println("awaiting...");
                     monitor.wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
