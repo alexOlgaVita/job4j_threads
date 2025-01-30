@@ -1,6 +1,5 @@
 package cash;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -8,36 +7,19 @@ public class AccountStorage {
     private final ConcurrentHashMap<Integer, Account> accounts = new ConcurrentHashMap<>();
 
     public synchronized boolean add(Account account) {
-        return (accounts.put(account.id(), account) != null);
+        return (accounts.putIfAbsent(account.id(), account) == null);
     }
 
     public synchronized boolean update(Account account) {
-        boolean result = false;
-        for (Map.Entry<Integer, Account> item : accounts.entrySet()) {
-            if (item.getKey() != null && item.getValue().id() == account.id()) {
-                accounts.put(item.getKey(), account);
-                result = true;
-            }
-        }
-        return result;
+        return (accounts.replace(account.id(), account) != null);
     }
 
     public synchronized void delete(int id) {
-        for (Map.Entry<Integer, Account> item : accounts.entrySet()) {
-            if (item.getKey() != null && item.getValue().id() == id) {
-                accounts.remove(item.getKey());
-            }
-        }
+        accounts.remove(id);
     }
 
     public synchronized Optional<Account> getById(int id) {
-        Optional<Account> result = Optional.empty();
-        for (Map.Entry<Integer, Account> item : accounts.entrySet()) {
-            if (item.getKey() != null && item.getValue().id() == id) {
-                result = Optional.of(item.getValue());
-            }
-        }
-        return result;
+        return Optional.ofNullable(accounts.get(id));
     }
 
     public synchronized boolean transfer(int fromId, int toId, int amount) {
