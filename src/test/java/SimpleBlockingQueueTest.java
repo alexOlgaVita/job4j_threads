@@ -31,6 +31,6 @@ class SimpleBlockingQueueTest {
         consumer1.start();
         producer1.join();
         consumer1.join();
-        assertThat(simpleBlockingQueue.poll()).isEqualTo(13);
+        assertThat(simpleBlockingQueue.poll()).isEqualTo(11);
     }
 }
