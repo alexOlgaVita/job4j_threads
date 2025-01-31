@@ -18,7 +18,7 @@ public class SimpleBlockingQueue<T> {
         synchronized (monitor) {
             while (queue.size() == MAX_SIZE) {
                 try {
-                    System.out.println("Queue is fulled...");
+                    System.out.println("Queue is over fulled...");
                     monitor.wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -33,12 +33,15 @@ public class SimpleBlockingQueue<T> {
         synchronized (monitor) {
             while (queue.isEmpty()) {
                 try {
+                    System.out.println("Queue is empty...");
                     monitor.wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }
-            return queue.poll();
+            T result = queue.poll();
+            monitor.notifyAll();
+            return result;
         }
     }
 }
