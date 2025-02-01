@@ -13,9 +13,13 @@ class SimpleBlockingQueueTest {
         Thread producer1 = new Thread(
                 () -> {
                     System.out.println(Thread.currentThread().getName() + " started");
-                    simpleBlockingQueue.offer(13);
-                    simpleBlockingQueue.offer(11);
-                    simpleBlockingQueue.offer(21);
+                    try {
+                        simpleBlockingQueue.offer(13);
+                        simpleBlockingQueue.offer(11);
+                        simpleBlockingQueue.offer(21);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 },
                 "Producer1"
         );
@@ -43,9 +47,12 @@ class SimpleBlockingQueueTest {
         final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
         Thread producer = new Thread(
                 () -> {
-                    IntStream.range(0, 10).forEach(
-                            queue::offer
-                    );
+                    try {
+                        for (int i = 0; i < 10; i++)
+                            queue.offer(i);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
         );
         producer.start();

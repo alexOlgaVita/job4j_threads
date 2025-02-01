@@ -8,21 +8,27 @@ public class SimpleBlockingQueue<T> {
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
     private final Object monitor = this;
-    public static final int MAX_SIZE = 10;
+    private int maxSize;
+
+    private static final int MAX_SIZE = 10;
+
+    public SimpleBlockingQueue(int size) {
+        this.maxSize = size;
+    }
+
+    public SimpleBlockingQueue() {
+        this.maxSize = MAX_SIZE;
+    }
 
     public boolean isEmpty() {
         return queue.isEmpty();
     }
 
-    public void offer(T value) {
+    public void offer(T value) throws InterruptedException {
         synchronized (monitor) {
-            while (queue.size() == MAX_SIZE) {
-                try {
+            while (queue.size() == maxSize) {
                     System.out.println("Queue is over fulled...");
                     monitor.wait();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
             }
             queue.add(value);
             monitor.notifyAll();
@@ -32,12 +38,8 @@ public class SimpleBlockingQueue<T> {
     public T poll() throws InterruptedException {
         synchronized (monitor) {
             while (queue.isEmpty()) {
-                try {
                     System.out.println("Queue is empty...");
                     monitor.wait();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
             }
             T result = queue.poll();
             monitor.notifyAll();

@@ -18,7 +18,11 @@ public class ParallelSearch {
         final Thread producer = new Thread(
                 () -> {
                     for (int index = 0; index != 3; index++) {
-                        queue.offer(index);
+                        try {
+                            queue.offer(index);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 },
                 "producer"
