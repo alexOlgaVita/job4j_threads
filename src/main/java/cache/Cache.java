@@ -14,7 +14,13 @@ public class Cache {
     }
 
     public boolean update(Base model) {
-        memory.computeIfPresent(model.getId(), (key, value) -> newVersion(model));
+        memory.computeIfPresent(model.getId(), (key, value) -> {
+            Base stored = memory.get(model.getId());
+            if (stored.getVersion() != model.getVersion()) {
+                throw new OptimisticException("Versions are not equal");
+            }
+            return new Base(model.getId(), model.getName(), model.version() + 1);
+        });
         return true;
     }
 
@@ -26,13 +32,5 @@ public class Cache {
         return Stream.of(memory.get(id))
                 .filter(Objects::nonNull)
                 .findFirst();
-    }
-
-    private Base newVersion(Base model) throws OptimisticException {
-        Base stored = memory.get(model.getId());
-        if (stored.getVersion() != model.getVersion()) {
-            throw new OptimisticException("Versions are not equal");
-        }
-        return new Base(model.getId(), model.getName(), model.version() + 1);
     }
 }
