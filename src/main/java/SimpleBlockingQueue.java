@@ -24,6 +24,10 @@ public class SimpleBlockingQueue<T> {
         return queue.isEmpty();
     }
 
+    public int size() {
+        return queue.size();
+    }
+
     public void offer(T value) throws InterruptedException {
         synchronized (monitor) {
             while (queue.size() == maxSize) {
