@@ -16,11 +16,7 @@ public class CASCount {
     }
 
     public int get() {
-        int expectedValue;
-        do {
-            expectedValue = count.get();
-        } while (!count.compareAndSet(expectedValue, expectedValue));
-        return expectedValue;
+        return count.get();
     }
 
     public static void main(String[] args) throws InterruptedException {
