@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,8 +47,9 @@ class SimpleBlockingQueueTest {
         Thread producer = new Thread(
                 () -> {
                     try {
-                        for (int i = 0; i < 10; i++)
+                        for (int i = 0; i < 10; i++) {
                             queue.offer(i);
+                        }
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
