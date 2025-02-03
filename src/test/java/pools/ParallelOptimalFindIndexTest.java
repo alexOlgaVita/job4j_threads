@@ -310,7 +310,6 @@ class ParallelOptimalFindIndexTest {
         assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(3);
     }
 
-
     private static class Role implements Comparable<Role> {
         private Integer id;
         private String name;
