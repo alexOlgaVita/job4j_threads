@@ -42,21 +42,20 @@ public class ParallelOptimalFindIndex<T extends Comparable<T>> extends Recursive
         return -1;
     }
 
-    private static <T extends Comparable<T>> Integer linearSearch(T[] arr, int firstIndex, int lastIndex, T value) {
-        if (lastIndex < firstIndex) {
-            return -1;
+    private static <T extends Comparable<T>> Integer linearSearch(T[] arr, T value) {
+        for (int i = 0; i < arr.length; i++) {
+            if (value.equals(arr[i])) {
+                return i;
+            }
         }
-        if (value.equals(arr[firstIndex])) {
-            return firstIndex;
-        }
-        return linearSearch(arr, firstIndex + 1, lastIndex, value);
+        return -1;
     }
 
     public static <T extends Comparable<T>> Integer optimalSearch(T[] array, T value) {
         Integer result = -1;
         if (array.length <= MAX_SIZE_FOR_LINEAR) {
             System.out.println("Линейный поиск");
-            result = linearSearch(array, 0, array.length - 1, value);
+            result = linearSearch(array, value);
         } else {
             System.out.println("Бинарный поиск");
             ForkJoinPool forkJoinPool = new ForkJoinPool();
