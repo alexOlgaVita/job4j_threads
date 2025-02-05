@@ -17,14 +17,19 @@ public class ParallelOptimalFindIndex<T extends Comparable<T>> extends Recursive
         this.elementToSearch = elementToSearch;
     }
 
+    private boolean exit(Integer a, Integer b) {
+        return a != -1 || b != -1;
+    }
+
+    private Integer indexOf(Integer a, Integer b) {
+        return a != -1 ? a : b;
+    }
+
     @Override
     protected Integer compute() {
         if (lastIndex >= firstIndex) {
             int mid = firstIndex + (lastIndex - firstIndex) / 2;
             if (elementToSearch.equals(arr[mid])) {
-                return mid;
-            }
-            if (arr[mid] == elementToSearch) {
                 return mid;
             }
             ParallelOptimalFindIndex oneFind = new ParallelOptimalFindIndex(arr, firstIndex, mid - 1, elementToSearch);
@@ -33,19 +38,8 @@ public class ParallelOptimalFindIndex<T extends Comparable<T>> extends Recursive
             twoFind.fork();
             Integer one = (Integer) oneFind.join();
             Integer two = (Integer) twoFind.join();
-            if (one != -1) {
-                return one;
-            } else if (two != -1) {
-                return two;
-            }
-        }
-        return -1;
-    }
-
-    private static <T extends Comparable<T>> Integer linearSearch(T[] arr, T value) {
-        for (int i = 0; i < arr.length; i++) {
-            if (value.equals(arr[i])) {
-                return i;
+            if (exit(one, two)) {
+                return indexOf(one, two);
             }
         }
         return -1;
@@ -55,12 +49,11 @@ public class ParallelOptimalFindIndex<T extends Comparable<T>> extends Recursive
         Integer result = -1;
         if (array.length <= MAX_SIZE_FOR_LINEAR) {
             System.out.println("Линейный поиск");
-            result = linearSearch(array, value);
-        } else {
-            System.out.println("Бинарный поиск");
-            ForkJoinPool forkJoinPool = new ForkJoinPool();
-            result = (Integer) forkJoinPool.invoke(new ParallelOptimalFindIndex(array, 0, array.length - 1, value));
+            return Search.indexOfBySimple(array, value);
         }
+        System.out.println("Бинарный поиск");
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        result = (Integer) forkJoinPool.invoke(new ParallelOptimalFindIndex(array, 0, array.length - 1, value));
         return result;
     }
 }
