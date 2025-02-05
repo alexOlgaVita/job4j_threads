@@ -26,16 +26,16 @@ class RolColSumTest {
     @Test
     public void whenSumsSize2() {
         int[][] matrix = {{1, 2}, {4, 5}};
-        assertThat(sum(matrix)).containsExactly(new Sums(3, 5)
-                , new Sums(9, 7));
+        assertThat(sum(matrix)).containsExactly(new Sums(3, 5),
+                new Sums(9, 7));
     }
 
     @Test
     public void whenSumsSize3() {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        assertThat(sum(matrix)).containsExactly(new Sums(6, 12)
-                , new Sums(15, 15)
-                , new Sums(24, 18));
+        assertThat(sum(matrix)).containsExactly(new Sums(6, 12),
+                new Sums(15, 15),
+                new Sums(24, 18));
     }
 
     @Test
@@ -53,15 +53,15 @@ class RolColSumTest {
     @Test
     public void whenAsyncSumsSize2() throws ExecutionException, InterruptedException {
         int[][] matrix = {{1, 2}, {4, 5}};
-        assertThat(asyncSum(matrix)).containsExactly(new Sums(3, 5)
-                , new Sums(9, 7));
+        assertThat(asyncSum(matrix)).containsExactly(new Sums(3, 5),
+                new Sums(9, 7));
     }
 
     @Test
     public void whenAsyncSumsSize3() throws ExecutionException, InterruptedException {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        assertThat(asyncSum(matrix)).containsExactly(new Sums(6, 12)
-                , new Sums(15, 15)
-                , new Sums(24, 18));
+        assertThat(asyncSum(matrix)).containsExactly(new Sums(6, 12),
+                new Sums(15, 15),
+                new Sums(24, 18));
     }
 }
