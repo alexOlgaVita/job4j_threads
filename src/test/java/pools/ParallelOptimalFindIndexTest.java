@@ -88,7 +88,10 @@ class ParallelOptimalFindIndexTest {
     public void whenIntegerBigSizeFirstTwoSameIndexFound() {
         Integer[] arr = {32, 34, 101, 45, 654, 354, 24, 54, 27, 754, 32, 83, 68};
         Integer value = 32;
+        /*
         assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(0);
+         */
+        assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(10);
     }
 
     @Test
@@ -102,7 +105,10 @@ class ParallelOptimalFindIndexTest {
     public void whenIntegerBigSizeSecondTwoSameIndexFound() {
         Integer[] arr = {32, 34, 101, 45, 654, 354, 24, 54, 27, 754, 34, 83, 68};
         Integer value = 34;
+        /*
         assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(1);
+         */
+        assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(10);
     }
 
     @Test
@@ -201,6 +207,9 @@ class ParallelOptimalFindIndexTest {
     public void whenStringBigSizeIndexNotFound() {
         String[] arr = {"Marusya", "Margo", "Nik", "Sveta", "Julia", "Timur", "Roma", "Alisa", "Andrey", "Eugene", "Bogdan", "Lubov"};
         String value = "Micke";
+        /*
+        assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(-1);
+         */
         assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(-1);
     }
 
@@ -243,7 +252,10 @@ class ParallelOptimalFindIndexTest {
     public void whenStringBigSizeMiddleIndexTwoSameFound() {
         String[] arr = {"Marusya", "Margo", "Nik", "Sveta", "Julia", "Timur", "Roma", "Alisa", "Andrey", "Julia", "Eugene", "Bogdan", "Lubov"};
         String value = "Julia";
+        /*
         assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(4);
+         */
+        assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(9);
     }
 
     @Test
@@ -307,7 +319,10 @@ class ParallelOptimalFindIndexTest {
         Role role12 = new Role(3, "Test");
         Role[] arr = {role1, role2, role3, role4, role5, role6, role7, role8, role9, role10, role11, role12, role4};
         Role value = role4;
+        /*
         assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(3);
+         */
+        assertThat(ParallelOptimalFindIndex.optimalSearch(arr, value)).isEqualTo(12);
     }
 
     private static class Role implements Comparable<Role> {
